@@ -1,5 +1,5 @@
-export CUDA_VISIBLE_DEVICES=0
-export WANDB_PROJECT=bitllama-wikitext
+# export CUDA_VISIBLE_DEVICES=0
+# export WANDB_PROJECT=bitllama-wikitext
 
 python run_clm.py \
 --dataset_name='wikitext' \
@@ -9,8 +9,8 @@ python run_clm.py \
 --tokenizer_name='beomi/llama-2-ko-7b' \
 --num_train_epochs=10 \
 --block_size=2048 \
---per_device_train_batch_size=1 \
---gradient_accumulation_steps=1 \
+--per_device_train_batch_size=3 \
+--gradient_accumulation_steps=3 \
 --optim adafactor \
 --learning_rate=8e-4 \
 --torch_dtype bfloat16 \
@@ -24,5 +24,5 @@ python run_clm.py \
 --save_total_limit=1 \
 --run_name='bitllama-wikitext' \
 --overwrite_output_dir \
---report_to='wandb' \
+--report_to='mlflow' \
 --low_cpu_mem_usage

@@ -55,6 +55,14 @@ from transformers.utils import check_min_version, send_example_telemetry
 from transformers.utils.versions import require_version
 
 
+import yaml
+import mlflow
+with open("./.env") as f:
+    env = yaml.safe_load(f)
+    for k, v in env.items():
+        os.environ[k] = v
+mlflow.set_experiment("bitnet-test")
+
 # Will error if the minimal version of Transformers is not installed. Remove at your own risks.
 check_min_version("4.35.0.dev0")
 
@@ -595,6 +603,7 @@ def main():
         preprocess_logits_for_metrics=preprocess_logits_for_metrics
         if training_args.do_eval and not is_torch_tpu_available()
         else None,
+        callbacks=[transformers.integrations.MLflowCallback()],
     )
 
     # Training
